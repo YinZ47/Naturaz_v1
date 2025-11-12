@@ -1,7 +1,7 @@
 package com.naturaz.bd.data.repository
 
-import com.naturaz.bd.core.common.NaturazResult
 import com.naturaz.bd.core.common.DispatcherProvider
+import com.naturaz.bd.core.common.NaturazResult
 import com.naturaz.bd.core.network.NetworkMonitor
 import com.naturaz.bd.core.network.safeApiCall
 import com.naturaz.bd.data.local.db.NaturazDatabase
@@ -13,6 +13,7 @@ import com.naturaz.bd.domain.model.Category
 import com.naturaz.bd.domain.model.HomeFeed
 import com.naturaz.bd.domain.model.Product
 import com.naturaz.bd.domain.repository.ProductRepository
+import androidx.room.withTransaction
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlinx.coroutines.flow.Flow
@@ -83,7 +84,7 @@ class ProductRepositoryImpl @Inject constructor(
                     .distinctBy { it.id }
                     .map { it.toEntity() }
                 val categoryEntities = dto.categories.map { it.toEntity() }
-                database.runInTransaction {
+                database.withTransaction {
                     productDao.insertProducts(productEntities)
                     categoryDao.insertCategories(categoryEntities)
                     homeFeedDao.insertHomeFeed(

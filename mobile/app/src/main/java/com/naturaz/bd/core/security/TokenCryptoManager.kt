@@ -1,8 +1,11 @@
 package com.naturaz.bd.core.security
 
-import android.content.Context
 import android.util.Base64
-import androidx.security.crypto.MasterKey
+import android.security.keystore.KeyGenParameterSpec
+import android.security.keystore.KeyProperties
+import android.content.Context
+import dagger.hilt.android.qualifiers.ApplicationContext
+import java.security.KeyStore
 import java.nio.ByteBuffer
 import java.security.GeneralSecurityException
 import javax.crypto.Cipher
@@ -14,36 +17,35 @@ import javax.inject.Singleton
 
 @Singleton
 class TokenCryptoManager @Inject constructor(
-    context: Context
+    @ApplicationContext context: Context
 ) {
-    private val keyAlias = "naturaz_token_key"
+    private val keyAlias = "${context.packageName}.naturaz_token_key"
     private val keySize = 256
     private val gcmTagLength = 128
     private val ivLength = 12
 
-    private val masterKey: MasterKey = MasterKey.Builder(context, keyAlias)
-        .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
-        .build()
+    private val keyStore: KeyStore = KeyStore.getInstance("AndroidKeyStore").apply { load(null) }
 
     private val secretKey: SecretKey by lazy {
         try {
-            val keyStore = java.security.KeyStore.getInstance("AndroidKeyStore").apply { load(null) }
-            (keyStore.getEntry(masterKey.alias, null) as? java.security.KeyStore.SecretKeyEntry)?.secretKey
-                ?: generateKey()
+            (keyStore.getEntry(keyAlias, null) as? KeyStore.SecretKeyEntry)?.secretKey ?: generateKey()
         } catch (ex: Exception) {
             throw IllegalStateException("Unable to load encryption key", ex)
         }
     }
 
     private fun generateKey(): SecretKey {
-        return KeyGenerator.getInstance("AES", "AndroidKeyStore").apply {
-            init(android.security.keystore.KeyGenParameterSpec.Builder(
-                masterKey.alias,
-                android.security.keystore.KeyProperties.PURPOSE_ENCRYPT or android.security.keystore.KeyProperties.PURPOSE_DECRYPT
-            ).setBlockModes(android.security.keystore.KeyProperties.BLOCK_MODE_GCM)
-                .setEncryptionPaddings(android.security.keystore.KeyProperties.ENCRYPTION_PADDING_NONE)
-                .setKeySize(keySize)
-                .build())
+        return KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, "AndroidKeyStore").apply {
+            init(
+                KeyGenParameterSpec.Builder(
+                    keyAlias,
+                    KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT
+                )
+                    .setBlockModes(KeyProperties.BLOCK_MODE_GCM)
+                    .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)
+                    .setKeySize(keySize)
+                    .build()
+            )
         }.generateKey()
     }
 

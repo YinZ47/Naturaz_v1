@@ -144,6 +144,7 @@ object TestLibs {
     const val turbine = "app.cash.turbine:turbine:${Versions.turbine}"
     const val coroutinesTest = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.coroutines}"
     const val androidJUnitExt = "androidx.test.ext:junit:1.1.5"
+    const val androidTestRunner = "androidx.test:runner:1.5.2"
     const val espressoCore = "androidx.test.espresso:espresso-core:${Versions.espresso}"
     const val composeUiTestJunit4 = "androidx.compose.ui:ui-test-junit4:${Versions.composeUiTestJunit4}"
     const val composeUiTestManifest = "androidx.compose.ui:ui-test-manifest"

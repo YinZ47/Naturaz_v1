@@ -6,5 +6,5 @@ import javax.inject.Inject
 class TrackOrderUseCase @Inject constructor(
     private val orderRepository: OrderRepository
 ) {
-    operator fun invoke(orderId: String) = orderRepository.trackOrder(orderId)
+    suspend operator fun invoke(orderId: String) = orderRepository.trackOrder(orderId)
 }

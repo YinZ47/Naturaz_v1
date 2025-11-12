@@ -20,7 +20,7 @@ import com.naturaz.bd.data.local.db.entity.ProductEntity
         CartItemEntity::class
     ],
     version = 1,
-    exportSchema = true
+    exportSchema = false
 )
 @TypeConverters(Converters::class)
 abstract class NaturazDatabase : RoomDatabase() {

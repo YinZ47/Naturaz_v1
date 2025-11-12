@@ -38,11 +38,13 @@ suspend inline fun <T> safeApiCall(crossinline block: suspend () -> T): NaturazR
         )
     }
 
-private fun parseHttpError(exception: HttpException): ApiErrorResponse? {
+@PublishedApi
+internal fun parseHttpError(exception: HttpException): ApiErrorResponse? {
     val errorBody = exception.response()?.errorBody() ?: return null
     return errorBody.parseErrorBody()
 }
 
-private fun ResponseBody.parseErrorBody(): ApiErrorResponse? = runCatching {
+@PublishedApi
+internal fun ResponseBody.parseErrorBody(): ApiErrorResponse? = runCatching {
     NaturazJson.decodeFromString<ApiErrorResponse>(string())
 }.getOrNull()

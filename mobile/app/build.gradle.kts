@@ -9,8 +9,15 @@ plugins {
     id(BuildPlugins.ksp)
     id(BuildPlugins.kotlinParcelize)
     id(BuildPlugins.kotlinSerialization)
-    id(BuildPlugins.googleServices)
-    id(BuildPlugins.crashlytics)
+}
+
+val hasGoogleServicesConfig = file("google-services.json").exists()
+
+if (hasGoogleServicesConfig) {
+    apply(plugin = BuildPlugins.googleServices)
+    apply(plugin = BuildPlugins.crashlytics)
+} else {
+    logger.warn("google-services.json not found. Skipping Google Services and Crashlytics plugins.")
 }
 
 val localProperties = Properties().apply {
@@ -43,6 +50,8 @@ android {
         buildConfigField("String", "NAGAD_APP_KEY", "\"${getLocalProperty("NAGAD_APP_KEY", "") }\"")
         buildConfigField("String", "ROCKET_APP_KEY", "\"${getLocalProperty("ROCKET_APP_KEY", "") }\"")
         buildConfigField("String", "FIREBASE_WEB_CLIENT_ID", "\"${getLocalProperty("FIREBASE_WEB_CLIENT_ID", "") }\"")
+
+        manifestPlaceholders["MAPS_API_KEY"] = getLocalProperty("MAPS_API_KEY", "")
     }
 
     signingConfigs {
@@ -207,6 +216,7 @@ dependencies {
     testImplementation(TestLibs.turbine)
 
     androidTestImplementation(TestLibs.androidJUnitExt)
+    androidTestImplementation(TestLibs.androidTestRunner)
     androidTestImplementation(TestLibs.espressoCore)
     androidTestImplementation(TestLibs.composeUiTestJunit4)
     androidTestImplementation(TestLibs.hiltTesting)

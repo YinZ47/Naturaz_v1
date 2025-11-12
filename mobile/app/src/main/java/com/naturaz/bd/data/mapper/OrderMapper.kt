@@ -59,8 +59,3 @@ private fun String.toPaymentMethod(): PaymentMethod = when (uppercase()) {
     "COD" -> PaymentMethod.CashOnDelivery()
     else -> PaymentMethod.CashOnDelivery()
 }
-
-private fun String.toCurrency(): Currency = when (uppercase()) {
-    "BDT" -> Currency.BDT
-    else -> Currency(code = this, symbol = "\u09F3", localeTag = "bn_BD")
-}
