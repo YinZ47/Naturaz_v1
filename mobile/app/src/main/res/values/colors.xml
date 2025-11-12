@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="naturaz_primary">#4CAF50</color>
+    <color name="naturaz_on_primary">#FFFFFFFF</color>
+    <color name="naturaz_secondary">#8BC34A</color>
+    <color name="naturaz_on_secondary">#FFFFFFFF</color>
+    <color name="naturaz_accent">#FFA726</color>
+    <color name="naturaz_background_light">#F5F5DC</color>
+    <color name="naturaz_surface_light">#FFFFFF</color>
+    <color name="naturaz_text_primary">#333333</color>
+    <color name="naturaz_success">#2E7D32</color>
+    <color name="naturaz_error">#D84315</color>
+    <color name="naturaz_warning">#FFC107</color>
+</resources>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Theme.Naturaz" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/black</item>
+    <item name="android:fontFamily">sans-serif</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
+        <item name="colorPrimary">@color/naturaz_primary</item>
+        <item name="colorSecondary">@color/naturaz_secondary</item>
+        <item name="colorAccent">@color/naturaz_accent</item>
+        <item name="android:textColor">@color/naturaz_text_primary</item>
+        <item name="android:windowBackground">@color/naturaz_background_light</item>
+    </style>
+
+    <style name="Theme.Naturaz.NoActionBar" parent="Theme.Naturaz">
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+</resources>

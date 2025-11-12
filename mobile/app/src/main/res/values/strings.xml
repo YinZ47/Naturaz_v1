@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Naturaz</string>
+    <string name="login">Login</string>
+    <string name="logout">Logout</string>
+    <string name="home_title">Naturaz Home</string>
+    <string name="error_generic">Something went wrong. Please try again.</string>
+    <string name="retry">Retry</string>
+    <string name="loading">Loading…</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
+    <string name="search_placeholder">Search eco-friendly products</string>
+    <string name="welcome_message">Welcome to Naturaz</string>
+</resources>

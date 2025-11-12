@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">নেচারাজ</string>
+    <string name="login">লগইন</string>
+    <string name="logout">লগআউট</string>
+    <string name="home_title">নেচারাজ হোম</string>
+    <string name="error_generic">কিছু ভুল হয়েছে। আবার চেষ্টা করুন।</string>
+    <string name="retry">পুনরায় চেষ্টা করুন</string>
+    <string name="loading">লোড হচ্ছে…</string>
+    <string name="confirm">নিশ্চিত করুন</string>
+    <string name="cancel">বাতিল</string>
+    <string name="search_placeholder">পরিবেশবান্ধব পণ্য খুঁজুন</string>
+    <string name="welcome_message">নেচারাজ-এ স্বাগতম</string>
+</resources>
