@@ -1,0 +1,133 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: naturaz-postgres
+    environment:
+      POSTGRES_USER: naturaz
+      POSTGRES_PASSWORD: naturaz_dev_password
+      POSTGRES_DB: naturaz_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - naturaz-network
+
+  # MongoDB Database
+  mongodb:
+    image: mongo:6
+    container_name: naturaz-mongodb
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: naturaz
+      MONGO_INITDB_ROOT_PASSWORD: naturaz_dev_password
+      MONGO_INITDB_DATABASE: naturaz
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - naturaz-network
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: naturaz-redis
+    command: redis-server --requirepass naturaz_dev_password
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - naturaz-network
+
+  # Elasticsearch
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.11.0
+    container_name: naturaz-elasticsearch
+    environment:
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - xpack.security.enabled=false
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    volumes:
+      - elasticsearch_data:/usr/share/elasticsearch/data
+    networks:
+      - naturaz-network
+
+  # RabbitMQ Message Queue
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: naturaz-rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: naturaz
+      RABBITMQ_DEFAULT_PASS: naturaz_dev_password
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    networks:
+      - naturaz-network
+
+  # MinIO (S3-compatible object storage for local development)
+  minio:
+    image: minio/minio:latest
+    container_name: naturaz-minio
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: naturaz
+      MINIO_ROOT_PASSWORD: naturaz_dev_password
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - minio_data:/data
+    networks:
+      - naturaz-network
+
+  # Prometheus (Monitoring)
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: naturaz-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./infrastructure/monitoring/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    networks:
+      - naturaz-network
+
+  # Grafana (Monitoring Dashboard)
+  grafana:
+    image: grafana/grafana:latest
+    container_name: naturaz-grafana
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    ports:
+      - "3001:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
+    networks:
+      - naturaz-network
+    depends_on:
+      - prometheus
+
+volumes:
+  postgres_data:
+  mongodb_data:
+  redis_data:
+  elasticsearch_data:
+  rabbitmq_data:
+  minio_data:
+  prometheus_data:
+  grafana_data:
+
+networks:
+  naturaz-network:
+    driver: bridge
