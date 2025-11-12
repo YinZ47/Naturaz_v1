@@ -8,13 +8,13 @@ object AppConfig {
 }
 
 object Versions {
-    const val gradle = "8.2.2"
-    const val kotlin = "1.9.10"
-    const val composeBom = "2023.10.01"
-    const val composeCompiler = "1.5.3"
+    const val gradle = "8.5.1"
+    const val kotlin = "1.9.24"
+    const val composeBom = "2024.09.01"
+    const val composeCompiler = "1.5.14"
     const val coreKtx = "1.12.0"
     const val lifecycle = "2.6.2"
-    const val activityCompose = "1.8.2"
+    const val activityCompose = "1.9.3"
     const val navigation = "2.7.6"
     const val hilt = "2.48"
     const val hiltNavigation = "1.1.0"
@@ -42,7 +42,7 @@ object Versions {
     const val junit5Android = "1.3.0"
     const val mockk = "1.13.8"
     const val turbine = "1.0.0"
-    const val composeUiTestJunit4 = "1.5.4"
+    const val composeUiTestJunit4 = "1.7.4"
     const val paging = "3.2.1"
     const val protobuf = "3.25.1"
     const val protobufPlugin = "0.9.4"
@@ -52,7 +52,7 @@ object Versions {
     const val playServicesAuth = "20.7.0"
     const val composeMaterial3Windows = "1.1.2"
     const val ossLicenses = "17.0.1"
-    const val ksp = "1.9.10-1.0.13"
+    const val ksp = "1.9.24-1.0.20"
 }
 
 object BuildPlugins {

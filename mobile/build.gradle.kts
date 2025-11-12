@@ -1,5 +1,8 @@
 @file:Suppress("UnstableApiUsage")
 
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     id("com.android.application") version Versions.gradle apply false
     id("org.jetbrains.kotlin.android") version Versions.kotlin apply false
@@ -17,5 +20,11 @@ allprojects {
                 useVersion(Versions.kotlin)
             }
         }
+    }
+}
+
+allprojects {
+    tasks.withType<KotlinCompile>().configureEach {
+        compilerOptions.jvmTarget.set(JvmTarget.JVM_17)
     }
 }
